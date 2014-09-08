@@ -411,15 +411,27 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitNormalized)
     {
-        size.width = contentSize.width * _parent.contentSizeInPoints.width;
+        if (_parent) {
+            size.width = contentSize.width * _parent.contentSizeInPoints.width;
+        } else {
+            size.width = contentSize.width * director.viewSize.width;
+        }
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - contentSize.width;
+        if (_parent) {
+            size.width = _parent.contentSizeInPoints.width - contentSize.width;
+        } else {
+            size.width = director.viewSize.width - contentSize.width;
+        }
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
+        if (_parent) {
+            size.width = _parent.contentSizeInPoints.width - contentSize.width * director.UIScaleFactor;
+        } else {
+            size.width = director.viewSize.width - contentSize.width * director.UIScaleFactor;
+        }
     }
     
     // Height
@@ -433,15 +445,27 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (heightUnit == CCSizeUnitNormalized)
     {
-        size.height = contentSize.height * _parent.contentSizeInPoints.height;
+        if (_parent) {
+            size.height = contentSize.height * _parent.contentSizeInPoints.height;
+        } else {
+            size.height = contentSize.height * director.viewSize.height;
+        }
     }
     else if (heightUnit == CCSizeUnitInsetPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - contentSize.height;
+        if (_parent) {
+            size.height = _parent.contentSizeInPoints.height - contentSize.height;
+        } else {
+            size.height = director.viewSize.height - contentSize.height;
+        }
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - contentSize.height * director.UIScaleFactor;
+        if (_parent) {
+            size.height = _parent.contentSizeInPoints.height - contentSize.height * director.UIScaleFactor;
+        } else {
+            size.height = director.viewSize.height - contentSize.height * director.UIScaleFactor;
+        }
     }
     
     return size;
@@ -469,6 +493,9 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     {
         
         float parentWidthInPoints = _parent.contentSizeInPoints.width;
+        if (!_parent) {
+            parentWidthInPoints = director.viewSize.width;
+        }
         if (parentWidthInPoints > 0)
         {
             size.width = pointSize.width/parentWidthInPoints;
@@ -480,11 +507,19 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (widthUnit == CCSizeUnitInsetPoints)
     {
-        size.width = _parent.contentSizeInPoints.width - pointSize.width;
+        if (_parent) {
+            size.width = _parent.contentSizeInPoints.width - pointSize.width;
+        } else {
+            size.width = director.viewSize.width - pointSize.width;
+        }
     }
     else if (widthUnit == CCSizeUnitInsetUIPoints)
     {
-        size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
+        if (_parent) {
+            size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.UIScaleFactor;
+        } else {
+            size.width = (director.viewSize.width - pointSize.width) / director.UIScaleFactor;
+        }
     }
     
     // Height
@@ -500,6 +535,9 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     {
         
         float parentHeightInPoints = _parent.contentSizeInPoints.height;
+        if (!_parent) {
+            parentHeightInPoints = director.viewSize.height;
+        }
         if (parentHeightInPoints > 0)
         {
             size.height = pointSize.height/parentHeightInPoints;
@@ -511,11 +549,19 @@ TransformPointAsVector(CGPoint p, CGAffineTransform t)
     }
     else if (heightUnit == CCSizeUnitInsetPoints)
     {
-        size.height = _parent.contentSizeInPoints.height - pointSize.height;
+        if (_parent) {
+            size.height = _parent.contentSizeInPoints.height - pointSize.height;
+        } else {
+            size.height = director.viewSize.height - pointSize.height;
+        }
     }
     else if (heightUnit == CCSizeUnitInsetUIPoints)
     {
-        size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.UIScaleFactor;
+        if (_parent) {
+            size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.UIScaleFactor;
+        } else {
+            size.height = (director.viewSize.height - pointSize.height) / director.UIScaleFactor;
+        }
     }
     
     return size;
